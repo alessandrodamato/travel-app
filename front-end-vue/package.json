@@ -9,6 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/quicksand": "^5.0.18",
+    "bootstrap": "^5.3.3",
+    "sass": "^1.77.8",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
   },
