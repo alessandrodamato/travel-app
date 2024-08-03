@@ -1,5 +1,4 @@
 <script>
-import { store } from '../data/store'
 import tt from '@tomtom-international/web-sdk-maps';
 import '@tomtom-international/web-sdk-maps/dist/maps.css'; 
 export default {
@@ -11,15 +10,11 @@ export default {
   },
   methods: {
     initializeMap() {
-      if (!store.apiKey) {
-        console.error('API key is missing!');
-        return;
-      }
 
       tt.setProductInfo("Travel App", "1.0");
 
       this.map = tt.map({
-        key: store.apiKey,
+        key: 'vXbg83rCHzRwMlWhyAwXADZhspyjYHPO',
         container: 'map',
         center: [10, 40],
         zoom: 4,
