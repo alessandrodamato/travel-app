@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import Map from '../views/Map.vue'
+import TTMap from '../views/TTMap.vue'
+import CreateTrip from '../views/CreateTrip.vue'
 import Error404 from '../views/Error404.vue'
 
 const router = createRouter({
@@ -13,8 +14,13 @@ const router = createRouter({
     },
     {
       path: '/map',
-      name: 'map',
-      component: Map
+      name: 'ttmap',
+      component: TTMap
+    },
+    {
+      path: '/create',
+      name: 'createTrip',
+      component: CreateTrip
     },
     {
       path: '/:pathMatch(.*)*',

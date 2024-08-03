@@ -10,11 +10,11 @@
 
   <header class="d-flex align-items-center justify-content-end px-5">
 
-    <router-link class="logo w-100 fw-bold text-decoration-none text-black text-sm-center" to="/">Travel App</router-link>
+    <div class="logo w-100 text-sm-center"><router-link class="fw-bold text-decoration-none text-black" to="/">Travel App</router-link></div>
     
     <div class="actions position-absolute">
       <router-link class="btn btn-outline-success border-0 me-2" to="/map"><i class="fa-regular fa-map"></i></router-link>
-      <button class="btn btn-outline-success border-0"><i class="fa-solid fa-plus"></i></button>
+      <router-link class="btn btn-outline-success border-0" to="/create"><i class="fa-solid fa-plus"></i></router-link>
     </div>
     
   </header>
