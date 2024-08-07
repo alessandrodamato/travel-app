@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import TTMap from '../views/TTMap.vue'
 import CreateTrip from '../views/CreateTrip.vue'
+import TripDetail from '../views/TripDetail.vue'
 import Error404 from '../views/Error404.vue'
 
 const router = createRouter({
@@ -21,6 +22,11 @@ const router = createRouter({
       path: '/create',
       name: 'createTrip',
       component: CreateTrip
+    },
+    {
+      path: '/trip-detail/:slug',
+      name: 'tripDetail',
+      component: TripDetail
     },
     {
       path: '/:pathMatch(.*)*',

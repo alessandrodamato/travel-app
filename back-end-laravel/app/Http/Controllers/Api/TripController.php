@@ -6,13 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Models\Trip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Functions\Helper;
+use App\Models\Day;
+use DateTime;
 
 class TripController extends Controller
 {
 
   public function getTrips(){
-    $trips = Trip::all()->sortDesc();
+    $trips = Trip::orderBy('start_date', 'desc')->get();
     return response($trips, 200);
+  }
+
+  public function getTripBySlug($slug){
+    $trip = Trip::where('slug', $slug)->first();
+    return response($trip, 200);
   }
 
   public function store(Request $request)
@@ -59,7 +67,19 @@ class TripController extends Controller
 
     $new_trip = new Trip();
     $new_trip->fill($form_data);
+    $new_trip->slug = Helper::generateSlug($new_trip->name, Trip::class);
     $new_trip->save();
+
+    $start_date = new DateTime($new_trip->start_date);
+    $end_date = new DateTime($new_trip->end_date);
+    $interval = $end_date->diff($start_date);
+    $n_days = $interval->days + 1;
+
+    for ($i = 0; $i < $n_days; $i++) {
+      $new_day = new Day();
+      $new_day->trip_id = $new_trip->id;
+      $new_day->save();
+    }
 
     $validatedData = $validator->validated();
     return response()->json($validatedData, 200);

@@ -19,7 +19,7 @@ export default {
 
 <template>
 
-  <div class="trip d-flex flex-wrap mb-4 p-3 rounded-3">
+  <div class="trip d-flex flex-wrap mb-4 p-3 rounded-3" @click="this.$router.push({name: 'tripDetail', params: {slug: tripObj.slug}})">
 
     <!-- // lato di sinistra -->
     <div class="trip-left w-100 pe-1">
@@ -44,6 +44,7 @@ export default {
 @use '../../assets/scss/partials/vars.scss' as *;
 
 .trip{
+  cursor: pointer;
   background-color: $color-1;
   .title{
     color: $color-2;
