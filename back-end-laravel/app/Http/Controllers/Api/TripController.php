@@ -13,13 +13,15 @@ use DateTime;
 class TripController extends Controller
 {
 
-  public function getTrips(){
+  public function getTrips()
+  {
     $trips = Trip::orderBy('start_date', 'desc')->get();
     return response($trips, 200);
   }
 
-  public function getTripBySlug($slug){
-    $trip = Trip::where('slug', $slug)->first();
+  public function getTripBySlug($slug)
+  {
+    $trip = Trip::where('slug', $slug)->with('days')->first();
     return response($trip, 200);
   }
 
@@ -78,10 +80,76 @@ class TripController extends Controller
     for ($i = 0; $i < $n_days; $i++) {
       $new_day = new Day();
       $new_day->trip_id = $new_trip->id;
+      $new_day->date = date('y-m-d', strtotime($new_trip->start_date . "+$i days"));
       $new_day->save();
     }
 
     $validatedData = $validator->validated();
     return response()->json($validatedData, 200);
+  }
+
+  public function edit(Request $request, $slug)
+  {
+    $trip = Trip::where('slug', $slug)->with('days')->first();
+
+    if (!$trip) {
+      return response()->json(['message' => 'Trip not found'], 404);
+    }
+
+    $rules = [
+      'name' => 'required|string|min:1|max:100',
+      'description' => 'required|string|min:10|max:65534',
+      'days' => 'array',
+      'days.*.id' => 'required|exists:days,id',
+      'days.*.description' => 'nullable|string'
+    ];
+
+    $messages = [
+      'name.required' => 'Il nome è obbligatorio.',
+      'name.string' => 'Il nome deve essere una stringa.',
+      'name.min' => 'Il nome deve contenere almeno 1 carattere.',
+      'name.max' => 'Il nome non può superare i 100 caratteri.',
+      'description.required' => 'La descrizione è obbligatoria.',
+      'description.string' => 'La descrizione deve essere una stringa.',
+      'description.min' => 'La descrizione deve contenere almeno 10 caratteri.',
+      'description.max' => 'La descrizione non può superare i 65534 caratteri.',
+      'days.array' => 'I giorni devono essere un array.',
+      'days.*.id.required' => 'L\'ID del giorno è obbligatorio.',
+      'days.*.id.exists' => 'Il giorno non esiste.',
+      'days.*.description.string' => 'La descrizione deve essere una stringa.',
+    ];
+
+    $validator = Validator::make($request->all(), $rules, $messages);
+
+    if ($validator->fails()) {
+      $errors = $validator->errors()->toArray();
+      $formattedErrors = [];
+
+      foreach ($errors as $field => $messages) {
+        $formattedErrors[$field] = implode('; ', $messages);
+      }
+
+      return response()->json([
+        'errors' => $formattedErrors
+      ], 400);
+    }
+
+    $trip->update([
+      'name' => $request->input('name'),
+      'description' => $request->input('description'),
+    ]);
+
+    $days = $request->input('days', []);
+    foreach ($days as $dayData) {
+      $day = Day::find($dayData['id']);
+      if ($day) {
+        $day->update([
+          'description' => $dayData['description']
+        ]);
+      }
+    }
+
+    $trip->load('days');
+    return response()->json(['message' => 'Trip updated successfully', 'trip' => $trip], 200);
   }
 }

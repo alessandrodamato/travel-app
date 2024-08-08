@@ -1,15 +1,12 @@
 <script>
+import { formatDate } from '../../assets/js/utils';
 export default {
   props:{
     tripObj: Object
   },
-  methods: {
-    formatDate(date) {
-      const d = new Date(date);
-      const day = String(d.getDate()).padStart(2, '0');
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const year = d.getFullYear();
-      return `${day}/${month}/${year}`;
+  methods:{
+    formattedDate(date){
+      return formatDate(date);
     }
   }
 }
@@ -30,7 +27,7 @@ export default {
     <!-- // lato di destra -->
     <div class="trip-right w-100 ps-1">
       <img src="https://picsum.photos/1000/1000" alt="Trip Image" class="img-fluid thumb rounded-3">
-      <div class="text-end pt-3 fs-09">{{ formatDate(tripObj.start_date) }} - {{ formatDate(tripObj.end_date) }}</div>
+      <div class="text-end pt-3 fs-09">{{ formattedDate(tripObj.start_date) }} - {{ formattedDate(tripObj.end_date) }}</div>
     </div>
 
   </div>

@@ -24,7 +24,7 @@
           })
           .catch(err => {
             this.isLoading = false;
-            console.log(err.message); 
+            console.log(err.message);
           })
       }
     },
@@ -45,7 +45,7 @@
 
     <div v-else class="container">
 
-      <div class="row row-cols-1 row-cols-xl-2">
+      <div v-if="trips.length > 0" class="row row-cols-1 row-cols-xl-2">
 
         <!-- trip -->
         <div v-for="(trip, index) in trips" :key="index" class="col">
@@ -55,6 +55,11 @@
         </div>
         <!-- /trip -->
 
+      </div>
+
+      <div v-else class="text-center">
+        <h3 class="mb-3">Non sono presenti viaggi</h3>
+        <router-link class="btn btn-success" to="/create">Crea un nuovo viaggio</router-link>
       </div>
 
     </div>

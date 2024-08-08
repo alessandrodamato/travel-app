@@ -18,3 +18,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('get-trips', [TripController::class, 'getTrips']);
 Route::get('create-trip', [TripController::class, 'store']);
 Route::get('trip-detail/{slug}', [TripController::class, 'getTripBySlug']);
+Route::put('/trip-detail/{slug}/edit', [TripController::class, 'edit']);
+

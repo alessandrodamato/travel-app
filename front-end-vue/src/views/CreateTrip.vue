@@ -57,12 +57,12 @@ export default {
 
     <PlaneLoader v-if="isLoading" />
 
-    <form v-else @submit.prevent="sendData()" class="container">
+    <form v-else @submit.prevent="sendData()" class="container mb-5">
 
       <div class="row">
 
         <div class="col-12 col-lg-6 offset-lg-3">
-          <div class="input-group" :class="{'mb-3' : !errors.name}">
+          <div class="input-group" :class="{'mb-3' : !errors?.name}">
             <span class="input-group-text" id="inputGroup-sizing-default">Nome del viaggio</span>
             <input v-model="tripObj.name" type="text" class="form-control" aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-default">
@@ -71,7 +71,7 @@ export default {
         </div>
 
         <div class="col-12 col-lg-6 offset-lg-3">
-          <div class="input-group" :class="{'mb-3' : !errors.start_date}">
+          <div class="input-group" :class="{'mb-3' : !errors?.start_date}">
             <span class="input-group-text" id="inputGroup-sizing-default">Data di inizio</span>
             <input v-model="tripObj.start_date" type="date" class="form-control" aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-default">
@@ -80,7 +80,7 @@ export default {
         </div>
 
         <div class="col-12 col-lg-6 offset-lg-3">
-          <div class="input-group" :class="{'mb-3' : !errors.end_date}">
+          <div class="input-group" :class="{'mb-3' : !errors?.end_date}">
             <span class="input-group-text" id="inputGroup-sizing-default">Data di fine</span>
             <input v-model="tripObj.end_date" type="date" class="form-control" aria-label="Sizing example input"
               aria-describedby="inputGroup-sizing-default">
@@ -96,7 +96,7 @@ export default {
         </div> -->
 
         <div class="col-12 col-lg-6 offset-lg-3">
-          <div class="form-floating" :class="{'mb-3' : !errors.description}">
+          <div class="form-floating" :class="{'mb-3' : !errors?.description}">
             <textarea v-model="tripObj.description" class="form-control"
               id="floatingTextarea"></textarea>
             <label for="floatingTextarea">Descrizione</label>
@@ -122,7 +122,7 @@ export default {
 
 form {
   padding: 150px 20px;
-  background-color: $color-2;
+  background-color: rgba($color-2, .4);
 }
 
 input:focus,
