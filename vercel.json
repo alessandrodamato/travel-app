@@ -1,0 +1,14 @@
+{
+  "builds": [
+    {
+      "src": "front-end-vue/package.json",
+      "use": "@vercel/static-build"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/front-end-vue/$1"
+    }
+  ]
+}
